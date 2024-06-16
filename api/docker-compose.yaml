@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  web:
+    container_name: "lct-api"
+    command: bash -c "alembic upgrade heads && python -m web"
+    build: .
+    env_file:
+      - '.env'
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    networks:
+      - custom
+  db:
+    container_name: "lct-database"
+    image: postgres:14.1-alpine
+    env_file:
+      - ".env"
+    restart: always
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge

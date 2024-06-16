@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+pythonpath = [
+    ".", "web",
+]
+asyncio_mode="auto"

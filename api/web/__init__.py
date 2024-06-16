@@ -1,0 +1,1 @@
+from web.database import Base
