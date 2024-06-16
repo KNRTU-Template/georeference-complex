@@ -16,6 +16,8 @@
    
 ## Роуты
 
+Документация API доступна по ссылке http://localhost/docs
+
 1. Старт анализа изображения
    ```python
    import requests
