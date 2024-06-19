@@ -26,16 +26,18 @@ class TaskManager:
     @staticmethod
     async def save_results(session: AsyncSession, task_id: int, data: dict):
         task = await TaskDAL.update(session, task_id, data=data, status='successful')
-        writer = csv.writer(CSV_FILENAME)
-        writer.writerow([
-            task.id,
-            task.layout_name,
-            task.crop_name,
-            data['coordinates']['ul'],
-            data['coordinates']['ur'],
-            data['coordinates']['br'],
-            data['coordinates']['bl'],
-            data['crs'],
-            data['start'],
-            data['end'],
-        ])
+        
+        with open(CSV_FILENAME, 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow([
+                task.id,
+                task.layout_name,
+                task.crop_name,
+                data['coordinates']['ul'],
+                data['coordinates']['ur'],
+                data['coordinates']['br'],
+                data['coordinates']['bl'],
+                data['crs'],
+                data['start'],
+                data['end'],
+            ])
