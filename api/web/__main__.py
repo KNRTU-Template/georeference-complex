@@ -1,12 +1,30 @@
+import csv
 import uvicorn
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+from pathlib import Path
 
 from web.geo.handlers import router
 from web.config import HOST, PORT
 
+from web.config import CSV_FILENAME
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    csv_file = Path(CSV_FILENAME)
+
+    if not csv_file.exists():
+        writer = csv.writer(open(CSV_FILENAME, 'w'))
+        header = ["task_id", "layout_name", "file_name", "ul", "ur", "br", "bl", "crs", "start", "end"]
+        writer.writerow(header)
+
+    yield
+
+
 app = FastAPI(
-    # openapi_url=None
+    lifespan=lifespan,  # openapi_url=None
 )
 
 app.add_middleware(

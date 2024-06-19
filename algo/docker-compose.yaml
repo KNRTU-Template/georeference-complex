@@ -6,3 +6,4 @@ services:
       - "8000:8000"
     volumes:
       - ./layouts:/src/layouts
+      - ./coords.csv:/src/coords.csv

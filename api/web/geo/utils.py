@@ -1,7 +1,9 @@
+import csv
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .models import Task
 from .dals import TaskDAL
+from web.config import CSV_FILENAME
 
 
 class TaskManager:
@@ -23,4 +25,17 @@ class TaskManager:
 
     @staticmethod
     async def save_results(session: AsyncSession, task_id: int, data: dict):
-        await TaskDAL.update(session, task_id, data=data, status='successful')
+        task = await TaskDAL.update(session, task_id, data=data, status='successful')
+        writer = csv.writer(CSV_FILENAME)
+        writer.writerow([
+            task.id,
+            task.layout_name,
+            task.crop_name,
+            data['coordinates']['ul'],
+            data['coordinates']['ur'],
+            data['coordinates']['br'],
+            data['coordinates']['bl'],
+            data['crs'],
+            data['start'],
+            data['end'],
+        ])
