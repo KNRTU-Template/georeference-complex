@@ -17,7 +17,7 @@ async def add_task(layout_name: str, file: UploadFile):
 
     crop_arr = gdal.Open(vsi_filename).ReadAsArray()[:3, :, :]
 
-    layout = gdal.Open(f"layouts/{layout_name}.tif")
+    layout = gdal.Open(f"layouts/{layout_name}")
 
     geo_corners, start, end = find_coordinates(layout, crop_arr)
 
