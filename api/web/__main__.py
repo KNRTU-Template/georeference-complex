@@ -16,7 +16,7 @@ async def lifespan(app: FastAPI):
     csv_file = Path(CSV_FILENAME)
 
     if not csv_file.exists():
-        writer = csv.writer(open(CSV_FILENAME, 'w'))
+        writer = csv.writer(open(CSV_FILENAME, 'a'))
         header = ["task_id", "layout_name", "file_name", "ul", "ur", "br", "bl", "crs", "start", "end"]
         writer.writerow(header)
 

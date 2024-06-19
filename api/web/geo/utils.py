@@ -27,7 +27,7 @@ class TaskManager:
     async def save_results(session: AsyncSession, task_id: int, data: dict):
         task = await TaskDAL.update(session, task_id, data=data, status='successful')
         
-        with open(CSV_FILENAME, 'w', newline='') as file:
+        with open(CSV_FILENAME, 'a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([
                 task.id,
